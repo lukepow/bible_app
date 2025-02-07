@@ -17,7 +17,7 @@ function Chapterslist() {
       <div id="chapter-list" className="list-container numeric-list">
       {chapterData ? (
         <ol>
-          {chapterData.chapters.map((chapter, index) => (
+          {chapterData?.chapters?.map((chapter, index) => (
             <li className="grid" key={index}>
               <Link className="grid-link" to={`/verses?version=${chapterData.version}&abbr=${chapterData.abbr}&chapter=${chapter.id}`}>
               {chapter.number}

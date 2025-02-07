@@ -14,10 +14,17 @@ function Verse() {
 
   useEffect(() => {
     const cachedData = queryClient.getQueryData([paramsObj.chapter]);
-    const translatedChapter = cachedData.chapterData.content;
-    const originalChapter = cachedData.chapterDataOriginal.content
-    setTranslatedPassage(getVerseRange(translatedChapter, paramsObj.start, paramsObj.end));
-    setOriginalPassage(getVerseRange(originalChapter, paramsObj.start, paramsObj.end));
+
+    const translatedChapter = cachedData?.chapterData?.content;
+    const originalChapter = cachedData?.chapterDataOriginal?.content;
+    
+    if (translatedChapter) {
+      setTranslatedPassage(getVerseRange(translatedChapter, paramsObj.start, paramsObj.end));
+    }
+
+    if (originalChapter) {
+      setOriginalPassage(getVerseRange(originalChapter, paramsObj.start, paramsObj.end));
+    }
   }, [queryClient, paramsObj.chapter, paramsObj.end, paramsObj.start])
 
 

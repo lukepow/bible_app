@@ -21,7 +21,7 @@ function Bookslist() {
       <div id="book-list" className="list-container">
         {booksData ? (
           <ul className="three-columns-list">
-            {booksData.list.map((book, index) => (
+            {booksData.list?.map((book, index) => (
               <li className="bible" key={index}>
                 <Link
                   to={`/chapters?version=${booksData.version}&abbr=${booksData.abbr}&book=${book.id}`}

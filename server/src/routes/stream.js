@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from 'body-parser';
-import { getGroqChatStream } from '../controllers/llm-api-controller.js';
+import { getChatStream } from '../controllers/llm-api-controller.js';
 import { bookIds } from '../utils/helpers.js';
 
 const router = express();
@@ -24,11 +24,22 @@ router.get('/', async (req, res) => {
   res.flushHeaders();
 
    try {
-        const stream = await getGroqChatStream(sessionData.reference, sessionData.translatedPassage, sessionData.originalPassage);
-        for await (const chunk of stream) {
-          const data = {message: chunk.choices[0]?.delta?.content || ""};
+        const { stream, onData } = getChatStream({
+          serviceName: "groq",
+        });
+
+        const streamResponse = await stream(
+          sessionData.reference,
+          sessionData.translatedPassage,
+          sessionData.originalPassage,
+        )
+
+        for await (const chunk of streamResponse) {
+          const data = { message: onData(chunk) };
+
           res.write(`data: ${JSON.stringify(data)}\n\n`);
         }
+
         req.on('close', () => {
           res.end();
         });

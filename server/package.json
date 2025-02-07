@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ai-sdk/openai": "^1.1.9",
+    "ai": "^4.1.21",
     "axios": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
